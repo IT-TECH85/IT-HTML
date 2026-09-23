@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mobile Device Connectivity — HTML Animation</title>
+<style>
+:root{--bg:#f6f1e8;--ink:#20242a;--muted:#686d75;--paper:#fffdf8;--line:#ddd3c4;--coral:#e85d3f;--teal:#176b67;--gold:#d9a441}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Segoe UI,Arial,sans-serif}
+.wrap{max-width:1250px;margin:auto;padding:25px}.head{display:flex;justify-content:space-between;gap:25px;align-items:end;border-bottom:2px solid var(--ink);padding-bottom:18px}
+.kicker{font-size:12px;font-weight:800;letter-spacing:3px;color:var(--teal);text-transform:uppercase}
+h1{font-size:38px;line-height:1.05;margin:7px 0 0}.intro{max-width:600px;color:var(--muted);line-height:1.5}
+.controls{display:flex;gap:8px;margin:18px 0}.controls button{padding:10px 15px;border:1px solid var(--ink);background:var(--paper);border-radius:5px;font-weight:700;cursor:pointer}
+.controls button:hover{background:var(--ink);color:white}.controls #auto{background:var(--teal);border-color:var(--teal);color:white}
+.layout{display:grid;grid-template-columns:255px 1fr 315px;gap:15px}.box{background:var(--paper);border:1px solid var(--line);border-radius:8px}
+.nav{padding:14px}.nav h2,.details h2{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;margin:3px 0 12px}
+.navitem{padding:12px 10px;margin:4px 0;border-left:4px solid transparent;cursor:pointer}.navitem.active{border-left-color:var(--coral);background:#f1e7d9;font-weight:800}
+.visual{padding:22px;min-height:620px;position:relative;overflow:hidden}.scene{height:485px;position:relative}
+.phone{position:absolute;width:180px;height:330px;left:50%;top:70px;transform:translateX(-50%);border:8px solid #252b32;border-radius:27px;background:#111820;box-shadow:20px 24px 0 #d8cfc2;animation:float 2.5s ease-in-out infinite}
+.screen{position:absolute;inset:12px;border-radius:16px;background:#f1eadf;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--teal);font-weight:900}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:62px;height:18px;background:#252b32;border-radius:0 0 10px 10px}
+.tablet{position:absolute;width:300px;height:215px;left:50%;top:155px;transform:translateX(-50%);border:8px solid #252b32;border-radius:18px;background:#111820;opacity:.10}
+.element{position:absolute;opacity:0;transition:.35s}.show .element{animation:pulse 1.4s ease-in-out infinite alternate}
+.cable{height:8px;border-radius:8px;background:var(--coral);width:220px;left:50%;top:255px;transform:rotate(180deg);transform-origin:left}
+.cable.usbc{width:210px;top:245px}.cable.lightning{width:190px;top:270px}
+.wave{border:3px solid var(--teal);border-left-color:transparent;border-bottom-color:transparent;border-radius:50%;transform:rotate(-45deg)}
+.w1{width:80px;height:80px;left:18%;top:190px}.w2{width:125px;height:125px;left:11%;top:165px}.w3{width:170px;height:170px;left:4%;top:140px}
+.nfc{width:76px;height:76px;left:15%;top:205px;border-radius:50%;background:#f5d27d;border:4px solid #a87818;color:#5d4814;font-weight:900;display:flex;align-items:center;justify-content:center}
+.bt{width:74px;height:74px;left:16%;top:195px;background:#9fd5cf;clip-path:polygon(50% 0,75% 25%,55% 45%,85% 75%,50% 100%,50% 58%,25% 82%,25% 18%,50% 42%);display:flex;align-items:center;justify-content:center;color:#155e5a;font-size:20px}
+.hot{width:95px;height:95px;left:13%;top:185px;border:5px solid var(--coral);border-radius:50%}
+.hot:before,.hot:after{content:"";position:absolute;border:3px solid var(--coral);border-left-color:transparent;border-right-color:transparent;border-bottom-color:transparent;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}.hot:before{width:58px;height:58px}.hot:after{width:32px;height:32px}
+.dot{width:15px;height:15px;border-radius:50%;background:var(--coral);left:51%;top:238px}
+.caption{position:absolute;bottom:8px;left:0;right:0;text-align:center;color:var(--muted);font-size:13px}
+.progress{height:5px;background:#e5dccf}.progress span{display:block;height:100%;width:0;background:var(--coral);transition:.4s}
+.details{padding:20px}.details h3{font-size:26px;margin:5px 0 12px}.details p{line-height:1.6;color:#50555c}
+.point{border-top:1px solid var(--line);padding:11px 0;line-height:1.45}.point b{color:var(--teal)}
+.legend{margin-top:13px;font-size:12px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}.legend i{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:5px}
+@keyframes float{50%{transform:translateX(-50%) translateY(-8px)}}@keyframes pulse{to{filter:drop-shadow(0 0 9px currentColor);transform:scale(1.05)}}
+@media(max-width:1050px){.layout{grid-template-columns:1fr 1fr}.visual{grid-column:1/-1}.nav{order:2}.details{order:3}}@media(max-width:700px){.layout{grid-template-columns:1fr}.visual{grid-column:auto}.head{display:block}.intro{margin-top:12px}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="head">
+<div><div class="kicker">Mobile Device Connectivity</div><h1>Wired & Wireless Connections</h1></div>
+<div class="intro">Explore USB, USB-C, Lightning, NFC, Bluetooth, hotspot and tethering with clear animated diagrams.</div>
+</header>
+<div class="controls">
+<button id="prev">← Previous</button><button id="auto">⏸ Autoplay</button><button id="next">Next →</button>
+</div>
+<div class="layout">
+<nav class="box nav"><h2>Connectivity Map</h2><div id="nav"></div></nav>
+<section class="box visual" id="visual">
+<div class="scene">
+<div class="tablet"></div>
+<div class="phone"><div class="screen" id="screenText">MOBILE<br>DEVICE</div><div class="notch"></div></div>
+<div class="element cable" id="usb"></div><div class="element cable usbc" id="usbc"></div><div class="element cable lightning" id="lightning"></div>
+<div class="element wave w1" id="w1"></div><div class="element wave w2" id="w2"></div><div class="element wave w3" id="w3"></div>
+<div class="element nfc" id="nfc">NFC</div><div class="element bt" id="bt">ᛒ</div><div class="element hot" id="hot"></div><div class="element dot" id="dot"></div>
+<div class="caption" id="caption"></div>
+</div>
+<div class="progress"><span id="bar"></span></div>
+<div class="legend"><span><i style="background:#e85d3f"></i>Wired / sharing</span><span><i style="background:#176b67"></i>Wireless</span><span><i style="background:#d9a441"></i>Short-range</span></div>
+</section>
+<aside class="box details"><div class="kicker">Topic</div><h3 id="title"></h3><p id="desc"></p><div id="points"></div></aside>
+</div>
+</div>
+<script>
+const data=[
+["USB","USB is a common wired connection for mobile devices. It can support charging, data connectivity and synchronization.",["Older devices may use mini USB or micro USB.","USB can be used to back up and synchronize device data.","USB Type-A may connect the cable to a computer.","The connector must match the device and cable."],"usb","USB • WIRED"],
+["USB-C","USB-C is a modern physical connector designed to be inserted in either orientation.",["USB-C has 24 pins.","It can carry different signal types through the same physical connector.","The supplied material identifies DisplayPort, HDMI and Thunderbolt as possible signals.","It supports higher speeds than older USB-style connectors."],"usbc","USB-C • REVERSIBLE"],
+["Lightning","Lightning is a proprietary Apple connector used by older iPhone and iPad devices.",["The connector has eight pins.","It can be inserted either way.","It was designed to address limitations of older USB connections.","It supported higher power output for charging."],"lightning","LIGHTNING • 8 PINS"],
+["NFC","Near Field Communication transfers a small amount of data over a very short distance.",["NFC is commonly built into phones, tablets and smartwatches.","Uses include point-of-sale payments and access control.","It can transfer information from one phone to another.","The supplied material describes a typical range of about 4 cm or less."],"nfc","NFC • SHORT RANGE"],
+["Bluetooth","Bluetooth provides short-range wireless communication, often for personal peripherals.",["Bluetooth is associated with a Personal Area Network (PAN).","Examples include wireless headphones, headsets, keyboards and mice.","It can support smartphone tethering.","Multiple phones and devices can be connected using Bluetooth."],"bt","BLUETOOTH • PAN"],
+["Hotspot","A smartphone can share its Internet connection so other devices can access the Internet.",["A hotspot allows many devices or people to connect through the phone.","Functionality depends on phone software and mobile-provider capabilities.","Check with the mobile provider to determine whether hotspot functionality is available."],"hot","HOTSPOT • MULTIPLE DEVICES"],
+["Tethering","Tethering uses a mobile phone connection to provide Internet access to one connected device.",["The supplied material distinguishes tethering from a hotspot by the number of connected devices.","Tethering is commonly associated with phone software and carrier capabilities.","Availability can depend on the mobile provider."],"hot","TETHERING • ONE DEVICE"]
+];
+let idx=0,timer=null;
+const nav=document.getElementById("nav");
+data.forEach((x,n)=>{const b=document.createElement("div");b.className="navitem";b.textContent=x[0];b.onclick=()=>{stop();idx=n;render()};nav.appendChild(b)});
+function render(){
+ const x=data[idx]; document.getElementById("title").textContent=x[0];document.getElementById("desc").textContent=x[1];document.getElementById("caption").textContent=x[4];
+ document.getElementById("screenText").innerHTML=x[0]==="NFC"?"NFC<br>ACCESS":x[0]==="Bluetooth"?"BLUETOOTH":x[0]==="Hotspot"?"HOTSPOT":x[0]==="Tethering"?"TETHERING":"MOBILE<br>DEVICE";
+ document.getElementById("points").innerHTML=x[2].map((p,n)=>`<div class="point"><b>${String(n+1).padStart(2,"0")}</b> ${p}</div>`).join("");
+ document.querySelectorAll(".navitem").forEach((e,n)=>e.classList.toggle("active",n===idx));
+ document.querySelectorAll(".element").forEach(e=>e.style.opacity=0);
+ if(x[3]==="usb")document.getElementById("usb").style.opacity=1;
+ if(x[3]==="usbc")document.getElementById("usbc").style.opacity=1;
+ if(x[3]==="lightning")document.getElementById("lightning").style.opacity=1;
+ if(x[3]==="nfc")document.getElementById("nfc").style.opacity=1;
+ if(x[3]==="bt"){document.getElementById("bt").style.opacity=1;["w1","w2","w3"].forEach(id=>document.getElementById(id).style.opacity=1)}
+ if(x[3]==="hot"){document.getElementById("hot").style.opacity=1;document.getElementById("dot").style.opacity=1;["w1","w2","w3"].forEach(id=>document.getElementById(id).style.opacity=1)}
+ document.getElementById("bar").style.width=((idx+1)/data.length*100)+"%";
+ const v=document.getElementById("visual");v.classList.remove("show");void v.offsetWidth;v.classList.add("show");
+}
+function next(){idx=(idx+1)%data.length;render()}function prev(){idx=(idx-1+data.length)%data.length;render()}
+function start(){if(timer)return;timer=setInterval(next,4000);document.getElementById("auto").textContent="⏸ Autoplay"}
+function stop(){if(timer){clearInterval(timer);timer=null}document.getElementById("auto").textContent="▶ Autoplay"}
+document.getElementById("next").onclick=()=>{stop();next()};document.getElementById("prev").onclick=()=>{stop();prev()};document.getElementById("auto").onclick=()=>timer?stop():start();
+render();start();
+</script>
+</body>
+</html>
